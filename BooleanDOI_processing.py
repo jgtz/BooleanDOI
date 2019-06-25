@@ -326,7 +326,7 @@ def form_network(rules,sorted_nodename=True):
         rule = rule.replace(' AND ',' and ')                                    # Force decap of logical operators so as to work with eval()
         rule = rule.replace(' OR ',' or ')
         rule = rule.replace(' NOT ',' not ')
-        if stream[n].find('True') >= 0 or stream[n].find('False') >= 0:         # For always ON or always OFF nodes
+        if rule.find('True') >= 0 or rule.find('False') >= 0:         # For always ON or always OFF nodes
             g.add_node(nodes.index(node))                                                       # We refer to nodes by their location in a sorted list of the user-provided node names
             g.node[nodes.index(node)]['update_nodes'] = []
             g.node[nodes.index(node)]['update_rules'] = {'':str(int(eval(rule)))}
