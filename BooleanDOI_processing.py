@@ -320,6 +320,9 @@ def form_network(rules,sorted_nodename=True):
     for n in xrange(len(stream)):
         node = stream[n].split('*=')[0]
         rule = stream[n].split('*=')[1]
+        rule = ' '+rule+' '                                                     # Adding leading a treading spaces so we can identify the "0" and "1" not in node variables
+        rule = rule.replace(')',' ) ').replace('(',' ( ')                       # Also adding leading a treading spaces so we can identify the "0" and "1" not in node variables
+        rule = rule.replace(' 0 ',' False ').replace(' 1 ',' True ')            # "0" and "1" when not in a node variable should now have a space before and after
         rule = rule.replace(' AND ',' and ')                                    # Force decap of logical operators so as to work with eval()
         rule = rule.replace(' OR ',' or ')
         rule = rule.replace(' NOT ',' not ')
