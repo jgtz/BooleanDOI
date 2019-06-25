@@ -332,9 +332,9 @@ def form_network(rules,sorted_nodename=True):
         inf = rule.split(' ')                                                   # Strip down to just a list of influencing nodes
         inf = [x.lstrip('(') for x in inf]
         inf = [x.rstrip(')') for x in inf]
+        inf = [x for x in inf if x not in ['','and','or','not']]
         #The sort ensures that when we do text replacement (<node string>->'True' or 'False') below in this fn, we avoid problems where node 1 is a substring of node 2 (e.g. NODE1_phosph and NODE1)
-        inf = sorted([x for x in inf if x not in ['','and','or','not']],key=len,reverse=True)
-        inf = [x for x in set(inf)]    #04/16/2016 to allow one variable appear twice in the rule like a XOR rule
+        inf = sorted([x for x in set(inf)],key=len,reverse=True)    #04/16/2016 to allow one variable appear twice in the rule like a XOR rule
 
         #mod
         for i in inf: g.add_edge(nodes.index(i),nodes.index(node))                              # Add edges from all influencing nodes to target node
