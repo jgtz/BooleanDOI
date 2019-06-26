@@ -320,10 +320,13 @@ def form_network(rules,sorted_nodename=True):
     for n in xrange(len(stream)):
         node = stream[n].split('*=')[0]
         rule = stream[n].split('*=')[1]
+        rule = ' '+rule+' '                                                     # Adding leading a treading spaces so we can identify the "0" and "1" not in node variables
+        rule = rule.replace(')',' ) ').replace('(',' ( ')                       # Also adding leading a treading spaces so we can identify the "0" and "1" not in node variables
+        rule = rule.replace(' 0 ',' False ').replace(' 1 ',' True ')            # "0" and "1" when not in a node variable should now have a space before and after
         rule = rule.replace(' AND ',' and ')                                    # Force decap of logical operators so as to work with eval()
         rule = rule.replace(' OR ',' or ')
         rule = rule.replace(' NOT ',' not ')
-        if stream[n].find('True') >= 0 or stream[n].find('False') >= 0:         # For always ON or always OFF nodes
+        if rule.find('True') >= 0 or rule.find('False') >= 0:         # For always ON or always OFF nodes
             g.add_node(nodes.index(node))                                                       # We refer to nodes by their location in a sorted list of the user-provided node names
             g.node[nodes.index(node)]['update_nodes'] = []
             g.node[nodes.index(node)]['update_rules'] = {'':str(int(eval(rule)))}
